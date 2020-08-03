@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+    <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <strong><link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></strong>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/hello.js') }}" ></script>
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+    </head>
+    <body style="background-image:url({{ url_for('static', filename='css/images/register.jpg') }})">
+    <div class="navbar">
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('moviehome') }}">Movie List</a>
+      <a href="{{ url_for('actorhome') }}">Actor List</a>
+      {% if current_user.is_authenticated %}
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+      <a href="{{ url_for('register') }}">Register</a>
+      <a href="{{ url_for('login') }}">Sign In</a>
+      {% endif %}
+      <div class="user">
+      {% if current_user.is_authenticated %}
+        <p>Hi, {{ current_user.username }}!</p>
+      {% endif %}
+      </div>
+      <div class="search">
+        <form action="" method="post" novalidate>
+          {{ form1.csrf_token }}
+          {{ form1.hidden_tag() }}
+          {{ form1.search.label }}
+          {{ form1.search(size=50) }}
+          {{ form1.submit1(class_="btn btn-primary btn-sm") }}
+        </form>
+      </div>
+    </div>
+    <div id="messages">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+            {% for message in messages %}
+              <li><div class="error_msg"><h3>{{ message }}</h3></div></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+    </div>
+    <div class="body_content3">
+        <h1>Register</h1>
+        <br>
+        <form action="" method="post">
+            {{ form8.hidden_tag() }}
+            <p>
+                {{ form8.username.label(class_="form_labels") }}<br>
+                {{ form8.username(size=32) }}<br>
+                {% for error in form8.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <br>
+            <p>
+                {{ form8.email.label(class_="form_labels") }}<br>
+                {{ form8.email(size=32) }}<br>
+                {% for error in form8.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <br>
+            <p>
+                {{ form8.password.label(class_="form_labels") }}<br>
+                {{ form8.password(size=32) }}<br>
+                {% for error in form8.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <br>
+            <p>
+                {{ form8.password2.label(class_="form_labels") }}<br>
+                {{ form8.password2(size=32) }}<br>
+                {% for error in form8.password2.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <br>
+            <p>{{ form8.submit8(class_="btn btn-danger signup-btn") }}</p>
+            <br>
+        </form>
+    </div>
+</body>
+</html>

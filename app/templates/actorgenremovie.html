@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Actor Genre's{% endblock %}
+{% block content %}
+{% set final_id = actor_id | int %} 
+<div id="movie">
+	<p> Movie's </p>
+	<ul>
+  	{% for i in movies %}
+    	<li><a href="{{ url_for('movie',id=i[0]) }}">{{ i[1] }}</a></li>
+  	{% endfor %}
+</ul>
+</div>
+{% endblock %}

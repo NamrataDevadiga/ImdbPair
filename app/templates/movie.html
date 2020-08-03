@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Movie{% endblock %}
+{% block content %}
+{% set final_id = id | int %} 
+{% set testing = 'css/images/movie' ~ movie.movie_id ~ '.jpg' %}
+{% set another = testing %}
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col-md-5"><img src="{{ url_for('static', filename=another) }}" alt="Movie Image"></div>
+    <div class="col-md-7" id="movie_info">
+      <div class="row"><h1 id="movie_title">{{ movie.movie_name }}</h1></div>
+      <br>
+      <div class="row"><p> <b>Release Date:</b> {{ movie.date }}</p></div>
+      <br>
+      <div class="row"><p> <b>Rating:</b> {{ movie.rating }}</p></div>
+      <br>
+      <div class="row"><p> <b>Summary:</b> {{ movie.summary }}</p></div>
+      <br>
+      <div class="row">
+        <div id="genre">
+          <p> <b>Genre:</b> </p>
+          <ul class="lists">
+          {% for i in genres %}
+            <li><a href="{{ url_for('genremovie',genre_id=i.genre_id) }}">{{ i.genre_name }}</a></li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <p> <b>Actors:</b> </p>
+        <ul class="lists">
+        {% for i in actors %}
+          <li><a href="{{ url_for('actor',id=i.actor_id) }}">{{ i.actor_name }}</a></li>
+        {% endfor %}
+        </ul>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-5">
+          <form action="/update/{{final_id}}" method="post">
+            <button type="submit" class="btn movie-btn">Update Movie</button>
+          </form>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+          <form action="/delete/{{final_id}}" method="post">
+            <button type="submit" class="btn movie-btn">Delete Movie</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %}Actor{% endblock %}
+{% block content %}
+{% set final_id = id | int %} 
+{% set testing = 'css/images/profile' ~ actor.actor_id ~ '.jpg' %}
+{% set another = testing %}
+<div class="container">
+	<br>
+	<br>
+	<div class="row">
+		<div class="col-md-5"><img src="{{ url_for('static', filename=another) }}" alt="Actor Image"></div>
+		<div class="col-md-7" id="movie_info">
+			<div class="row"><h1 id="movie_title">{{ actor.actor_name }}</h1></div>
+			<br>
+      		<div class="row"><p> <b>Born on:</b> {{ actor.born_on }}</p></div>
+      		<br>
+      		<div class="row"><p> <b>Star Sign:</b> {{ actor.star_sign }}</p></div>
+      		<br>
+      		<div class="row"><p> <b>Bio:</b> {{ actor.bio }}</p></div>
+      		<br>
+      		<div class="row">
+            <div class="col-md-4">
+        		  <p> <b>Movies's:</b> </p>
+        		  <ul class="lists">
+        		  {% for i in movies %}
+    				  <li><a href="{{ url_for('movie',id=i.movie_id) }}">{{ i.movie_name }}</a></li>
+  				    {% endfor %}
+        		  </ul>
+            </div>
+            <div class="col-md-4">
+              <p> <b>Max Movie's Together:</b> </p>
+              <ul class="lists">
+              <li><a href="{{ url_for('results', id1=actor.actor_id ,id2=costars[0].actor_id) }}">{{ actor.actor_name }} - {{ costars[0].actor_name }}</a></li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <p> <b>Most Popular Pairing is:</b> </p>
+              {% if popular %}
+              <ul class="lists">
+              <li><a href="{{ url_for('results', id1=actor.actor_id ,id2=popular[0].actor_id) }}">{{ actor.actor_name }} - {{ popular[0].actor_name }}</a></li>
+              </ul>
+              {% else %}
+              <ul class="lists">
+              <li><a href="{{ url_for('results', id1=actor.actor_id ,id2=costars[0].actor_id) }}">{{ actor.actor_name }} - {{ costars[0].actor_name }}</a></li>
+              </ul>
+              {% endif %}
+            </div>
+    		</div>
+    		<br>
+    		<br>
+    		<div class="row">
+            <div class="col-md-3"></div>
+        		<div class="col-md-6">
+          			<form action="/updateactor/{{final_id}}" method="post">
+    					<button type="submit" class="btn movie-btn">Update Actor Information</button>
+		  			</form>
+        		</div>
+        		<div class="col-md-3"></div>
+    		</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

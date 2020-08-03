@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}ActorPairResults{% endblock %}
+{% block content %}
+{% set testing = 'css/images/actor' ~ actor1.actor_id ~ '.jpg' %}
+{% set another = testing %}
+{% set testing1 = 'css/images/actor' ~ actor2.actor_id ~ '.jpg' %}
+{% set another1 = testing1 %}
+<div class="container">
+	<div class="row" id="collab_title"><h1>Artists</h1></div>
+	<br>
+	<div class="row">
+		<div class="col-md-6" id="img-with-text"><a href="{{ url_for('actor',id=actor1.actor_id) }}"><img src="{{ url_for('static', filename=another) }}" alt="Actor Image"><h1>{{ actor1.actor_name }}<h1></a></div>
+		<div class="col-md-6" id="img-with-text"><a href="{{ url_for('actor',id=actor2.actor_id) }}"><img src="{{ url_for('static', filename=another1) }}" alt="Actor Image"><h1>{{ actor2.actor_name }}<h1></a></div>
+	</div>
+	<br>
+	<br>
+	<div class="row" id="collab_title">
+		<h1>Movies Done Together</h1>
+		<br>
+		<table>
+		{%- for row in movies|batch(3, '&nbsp;') %}
+		  <tr>
+		  {%- for column in row %}
+		  	{% set testing = 'css/images/' ~ column.movie_id ~ '.jpg' %}
+			{% set another = testing %}
+			{% if column.movie_id %}
+				<td>
+					<div class="item">
+						<a href="{{ url_for('movie',id=column.movie_id) }}"><img src="{{ url_for('static', filename=another) }}" alt="User Image">
+						<span class="caption"><h2>{{ column.movie_name }}</h2></span></a>
+					</div>
+				</td>
+			{% else %}
+		    	<td></td>
+		    {% endif %}
+		  {%- endfor %}
+		  </tr>
+		{%- endfor %}
+		</table>
+	</div>
+	<div class="row">
+		<form action="/upvote/{{actor1.actor_id}}/{{actor2.actor_id}}/{{current_user.id}}" method="post">
+            <button type="submit" class="btn btn-danger">Upvote for pair</button>
+        </form>
+	</div>
+</div>
+{% endblock %}

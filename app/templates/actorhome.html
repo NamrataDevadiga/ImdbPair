@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div id="actor_list">
+	<h1 id="page_title">Popular Celebs</h1>
+	<br>
+	<br>
+	<table>
+	{%- for row in actors|batch(3, '&nbsp;') %}
+	  <tr>
+	  {%- for column in row %}
+	  	{% set testing = 'css/images/actor' ~ column.actor_id ~ '.jpg' %}
+		{% set another = testing %}
+		{% if column.actor_id %}
+			<td>
+				<div class="item1">
+					<a href="{{ url_for('actor',id=column.actor_id) }}"><img src="{{ url_for('static', filename=another) }}" alt="Actor Image">
+					<span class="caption">{{ column.actor_name }}</span></a>
+				</div>
+			</td>
+		{% else %}
+	    	<td></td>
+	    {% endif %}
+	  {%- endfor %}
+	  </tr>
+	{%- endfor %}
+	</table>
+</div>
+{% endblock %}

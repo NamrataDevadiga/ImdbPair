@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}Genres{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row" id="collab_title"><h1><p>Browse Movies Based On Genre</p></h1></div>
+	<br>
+	<div class="row">
+		<div id="genre">
+		<ul class="lists1">
+	  	{% for i in genres %}
+	  		{% set testing = 'css/images/genre' ~ i.genre_id ~ '.jpg' %}
+			{% set another = testing %}
+	    	<li>
+	    		<div id="genre_list">
+	    			<img class="genre_img" src="{{ url_for('static', filename=another) }}" alt="Actor Image"><a href="{{ url_for('genremovie',genre_id=i.genre_id) }}"><h2>{{ i.genre_name }} Movie's</h2></a>
+	    		</div>
+	    	</li>
+	    	<br>
+	    	<br>
+	    	<br>
+	  	{% endfor %}
+		</ul>
+		</div>
+	</div>
+</div>
+{% endblock %}

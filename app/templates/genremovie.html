@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %}Genre Movie{% endblock %}
+{% block content %}
+<div id="movie_list">
+	<h1 id="page_title"> Movies in this Genre are: </h1>
+	<br>
+	<br>
+	<table>
+	{%- for row in movies|batch(3, '&nbsp;') %}
+	  <tr>
+	  {%- for column in row %}
+	  	{% set testing = 'css/images/' ~ column.movie_id ~ '.jpg' %}
+		{% set another = testing %}
+		{% if column.movie_id %}
+			<td>
+				<div class="item">
+					<a href="{{ url_for('movie',id=column.movie_id) }}"><img src="{{ url_for('static', filename=another) }}" alt="User Image">
+					<span class="caption">{{ column.movie_name }}</span></a>
+				</div>
+			</td>
+		{% else %}
+	    	<td></td>
+	    {% endif %}
+	  {%- endfor %}
+	  </tr>
+	{%- endfor %}
+	</table>
+	<div id="movies_genre">
+		<form action="/genre" method="post">
+    		<button type="submit" class="btn btn-danger">Back to Genre</button>
+		</form>
+	</div>
+</div>
+{% endblock %}
